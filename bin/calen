@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require 'pry'
+require 'date_ranges'
+require 'exchange_gateway'
+require 'logging'
+require 'yaml'
+require 'time'
+
+logger = Logging.logger(STDOUT)
+logger.level = :warn
+
+site = 'ODE'
+
+endpoint = 'https://webmail.tomtomgroup.com/ews/Exchange.asmx'
+settings = YAML.load_file File.expand_path('~/.jira')
+
+ex = ExchangeGateway.new(endpoint, settings)
+
+ex.room_lists
+
+
+
+binding.pry
