@@ -1,0 +1,51 @@
+# encoding: utf-8
+require 'optparse'
+require 'ostruct'
+require 'chronic'
+require 'chronic_duration'
+
+class Options
+  def parse(args)
+    options = OpenStruct.new
+    options.sites = []
+    options.date = Time.now
+    options.length = 60
+    options.mode = :dayview
+
+    option_parser = OptionParser.new do |opts|
+      opts.banner = "Usage: $0 [options]"
+
+      opts.on '-s', '--site SITE', 'SITE to search for rooms' do |site|
+        options.sites << site
+      end
+
+      opts.on '-d', '--date DATE', 'DATE to search' do |date|
+        options.date = Chronic.parse(date) || options.date
+      end
+
+      opts.on '--start-time TIME', 'TIME for the beginning of the day' do |time|
+        options.start_time = Chronic.parse(time, now: options.date)
+      end
+
+      opts.on '--end-time TIME', 'TIME for the end of the day' do |time|
+        options.end_time = Chronic.parse(time, now: options.date)
+      end
+
+      opts.on '-l', '--length DURATION', 'Length of meeting' do |length|
+        options.length = ChronicDuration.parse(length)
+      end
+
+      # specifying -t makes the tool look for a room at time t, for -l minutes
+      opts.on '-t', '--time TIME', 'Start time of the meeting' do |time|
+        options.time = Chronic.parse(time, now: options.date)
+        options.mode = :freerooms
+      end
+    end
+
+    option_parser.parse!(args)
+    options.start_time ||= Time.parse('08:00', options.date)
+    options.end_time ||= Time.parse('18:00', options.date)
+    options
+
+  end
+end

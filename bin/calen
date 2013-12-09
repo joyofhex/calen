@@ -14,7 +14,8 @@ require 'options'
 logger = Logging.logger(STDOUT)
 logger.level = :warn
 
-site = 'ODE'
+option_parser = Options.new
+options = option_parser.parse(ARGV)
 
 endpoint = 'https://webmail.tomtomgroup.com/ews/Exchange.asmx'
 settings = YAML.load_file File.expand_path('~/.jira')
