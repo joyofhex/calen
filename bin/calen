@@ -88,7 +88,7 @@ elsif options.mode == :freerooms
   ]
 
   rooms.each do |room|
-    puts room[:name] if room[:booked].length == 0
+    puts "\t" + room[:name] if room[:booked].length == 0
   end
 end
 
