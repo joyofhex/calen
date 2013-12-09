@@ -52,20 +52,44 @@ def time_header(start_time, end_time, step)
   display_string
 end
 
-rooms = ex.rooms_in_site_code('ODE')
+rooms = ex.rooms_in_site_code(options.sites.first)
+today = options.date
 
-today = Time.now
+if options.mode == :dayview
+  start_time = options.start_time
+  end_time = options.end_time
 
+  rooms.each do |room|
+    room[:booked] = ex.room_availability room[:address], start_time, end_time
+  end
 
-start_time = Time.parse('07:00:00+00:00', today)
-end_time   = Time.parse('19:00:00+00:00', today)
-rooms.each do |room|
-  room[:booked] = ex.room_availability room[:address], start_time, end_time
-end
+  puts 'Room Availability on %s from %s until %s' % [
+    start_time.strftime('%F'),
+    start_time.strftime('%R'),
+    end_time.strftime('%R'),
+  ]
+  puts '%-30s ' % [ 'Room' ] + time_header(start_time, end_time, 7200)
+  rooms.each do |room|
+    puts room[:name][0..28] + ': ' + free_busy_per_quarter_hour_display(room[:booked], start_time, end_time)
+  end
+elsif options.mode == :freerooms
+  start_time = options.time
+  end_time = options.time + options.length
 
-puts '%-29s: ' % [ 'Room' ] + time_header(start_time, end_time, 7200)
-rooms.each do |room|
-  puts room[:name][0..28] + ': ' + free_busy_per_quarter_hour_display(room[:booked], start_time, end_time)
+  rooms.each do |room|
+    room[:booked] = ex.room_availability room[:address], start_time, end_time
+  end
+
+  puts 'Available rooms on %s at %s for %s (ending at %s)' % [
+    start_time.strftime('%F'),
+    start_time.strftime('%R'),
+    ChronicDuration.output(options.length),
+    end_time.strftime('%R'),
+  ]
+
+  rooms.each do |room|
+    puts room[:name] if room[:booked].length == 0
+  end
 end
 
 

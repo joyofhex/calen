@@ -24,7 +24,7 @@ class ExchangeGateway
   def rooms_in_room_list(room_list_address)
     rooms = cli.get_rooms(room_list_address)
     rooms.roomsArray.map do |e| 
-      { 
+      {
         name: e[:room][:elems][:id][:elems].detect { |k,v| k.has_key? :name }[:name][:text], 
         address: e[:room][:elems][:id][:elems].detect { |k,v| k.has_key? :email_address }[:email_address][:text],
       }
@@ -46,7 +46,8 @@ class ExchangeGateway
   end
 
   def user_availability(address, start_time, end_time)
-    availability = cli.get_user_availability([address], start_time: start_time, end_time: end_time, requested_view: :free_busy, time_zone: { bias: 0 })
+    bias = -( start_time.utc_offset / 60 )
+    availability = cli.get_user_availability([address], start_time: start_time, end_time: end_time, requested_view: :free_busy, time_zone: { bias: bias })
     availability.calendar_event_array.map do |event|
       time_range_for_calendar_event(event[:calendar_event][:elems])
     end
