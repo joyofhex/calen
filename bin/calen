@@ -1,11 +1,15 @@
 #!/usr/bin/env ruby
 
-require 'pry'
-require 'date_ranges'
-require 'exchange_gateway'
 require 'logging'
 require 'yaml'
 require 'time'
+require 'optparse'
+require 'pry'
+require 'chronic_duration'
+
+require 'date_ranges'
+require 'exchange_gateway'
+require 'options'
 
 logger = Logging.logger(STDOUT)
 logger.level = :warn

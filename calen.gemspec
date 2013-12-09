@@ -22,4 +22,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_dependency 'pry'
   spec.add_development_dependency 'rspec'
+  spec.add_dependency 'chronic'
+  spec.add_dependency 'chronic_duration'
 end
