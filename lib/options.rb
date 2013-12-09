@@ -45,6 +45,7 @@ class Options
     option_parser.parse!(args)
     options.start_time ||= Time.parse('08:00', options.date)
     options.end_time ||= Time.parse('18:00', options.date)
+    options.sites << 'ODE' if options.sites.count == 0
     options
 
   end
