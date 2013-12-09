@@ -56,7 +56,7 @@ class ExchangeGateway
   def time_range_for_calendar_event(event)
     start_time = event.detect { |g| g.has_key? :start_time }[:start_time][:text]
     end_time = event.detect { |g| g.has_key? :end_time }[:end_time][:text]
-    Time.parse(start_time + 'Z')..Time.parse(end_time + 'Z')
+    Time.parse(start_time)...Time.parse(end_time)
   end
 
   def cli
