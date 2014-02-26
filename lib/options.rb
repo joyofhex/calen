@@ -23,11 +23,11 @@ class Options
         options.date = Chronic.parse(date) || options.date
       end
 
-      opts.on '--start-time TIME', 'TIME for the beginning of the day' do |time|
+      opts.on '--work-day-start-time TIME', 'TIME for the beginning of the day' do |time|
         options.start_time = Chronic.parse(time, now: options.date)
       end
 
-      opts.on '--end-time TIME', 'TIME for the end of the day' do |time|
+      opts.on '--work-day-end-time TIME', 'TIME for the end of the day' do |time|
         options.end_time = Chronic.parse(time, now: options.date)
       end
 
