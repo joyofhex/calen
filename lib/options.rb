@@ -9,7 +9,7 @@ class Options
     options = OpenStruct.new
     options.sites = []
     options.date = Time.now
-    options.length = 60
+    options.length = 3600
     options.mode = :dayview
 
     option_parser = OptionParser.new do |opts|
