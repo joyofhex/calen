@@ -20,7 +20,7 @@ class Options
       end
 
       opts.on '-d', '--date DATE', 'DATE to search' do |date|
-        options.date = Chronic.parse(date) || options.date
+        options.date = time_at_midnight_on(Chronic.parse(date) || options.date)
       end
 
       opts.on '--work-day-start-time TIME', 'TIME for the beginning of the day' do |time|
@@ -48,5 +48,9 @@ class Options
     options.sites << 'ODE' if options.sites.count == 0
     options
 
+  end
+
+  def time_at_midnight_on(date)
+    Time.gm(date.year, date.month, date.day)
   end
 end
