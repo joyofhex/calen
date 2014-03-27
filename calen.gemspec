@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Calen::VERSION
   spec.authors       = ["David Bruce"]
   spec.email         = ["david.bruce@tomtom.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Find a free meeting room}
+  spec.summary       = %q{Find a free meeting room}
   spec.homepage      = ""
   spec.license       = "MIT"
 
