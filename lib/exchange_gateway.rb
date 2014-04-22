@@ -46,6 +46,7 @@ class ExchangeGateway
   end
 
   def user_availability(address, start_time, end_time)
+    cli.set_time_zone('UTC')
     bias = -( start_time.utc_offset / 60 )
     availability = cli.get_user_availability([address], start_time: start_time, end_time: end_time, requested_view: :free_busy, time_zone: { bias: bias })
     availability.calendar_event_array.map do |event|
@@ -56,6 +57,8 @@ class ExchangeGateway
   def time_range_for_calendar_event(event)
     start_time = event.detect { |g| g.has_key? :start_time }[:start_time][:text]
     end_time = event.detect { |g| g.has_key? :end_time }[:end_time][:text]
+    start_time += "+00:00"
+    end_time += "+00:00"
     Time.parse(start_time)...Time.parse(end_time)
   end
 
