@@ -28,27 +28,10 @@ ex = ExchangeGateway.new(endpoint, settings)
 rooms = ex.rooms_in_site_code(options.sites.first)
 today = options.date
 
-if options.mode == :dayview
-  app = Calen::App::Dayview.new
-  app.run(options, ex, rooms)
-elsif options.mode == :freerooms
-  start_time = options.time
-  end_time = options.time + options.length
+MODE_TO_APP_CLASS_MAP = {
+  dayview: Calen::App::Dayview,
+  freerooms: Calen::App::FreeRooms,
+}
 
-  rooms.each do |room|
-    room[:booked] = ex.room_availability room[:address], start_time, end_time
-  end
-
-  puts 'Available rooms on %s at %s for %s (ending at %s)' % [
-    start_time.strftime('%F'),
-    start_time.strftime('%R'),
-    ChronicDuration.output(options.length),
-    end_time.strftime('%R'),
-  ]
-
-  rooms.each do |room|
-    puts "\t" + room[:name] if room[:booked].length == 0
-  end
-end
-
-
+app = MODE_TO_APP_CLASS_MAP[options.mode].new
+app.run(options, ex, rooms)
