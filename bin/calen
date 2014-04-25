@@ -25,36 +25,6 @@ settings = YAML.load_file File.expand_path('~/.jira')
 
 ex = ExchangeGateway.new(endpoint, settings)
 
-def time_iterate(start_time, end_time, step, &block)
-  begin
-    yield(start_time)
-  end while (start_time += step) <= end_time
-end
-
-def is_time_covered_by_booked_times?(booked_ranges, time)
-  !!booked_ranges.detect { |b| b.cover? time }
-end
-
-def free_symbol(time)
-  time.to_i % 3600 == 0 ? '|' : '.'
-end
-
-def free_busy_per_quarter_hour_display(booked_ranges, start_time, end_time)
-  display_string = ''
-  time_iterate(start_time, end_time, 900) do |time|
-    display_string += is_time_covered_by_booked_times?(booked_ranges, time) ? '*' : free_symbol(time)
-  end
-  display_string
-end
-
-def time_header(start_time, end_time, step)
-  display_string = ''
-  time_iterate(start_time, end_time, 7200) do |time|
-    display_string += '|%-7s' % [time.strftime('%H:%M')]
-  end
-  display_string
-end
-
 rooms = ex.rooms_in_site_code(options.sites.first)
 today = options.date
 
