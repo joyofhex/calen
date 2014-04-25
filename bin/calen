@@ -8,6 +8,7 @@ require 'pry'
 require 'chronic_duration'
 
 require 'calen/app/dayview'
+require 'calen/app/freerooms'
 
 require 'date_ranges'
 require 'exchange_gateway'
