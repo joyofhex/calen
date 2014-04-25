@@ -65,6 +65,10 @@ class ExchangeGateway
     Time.parse(start_time)...Time.parse(end_time)
   end
 
+  private
+
+  def timezone; @timezone; end
+
   def cli
     @cli
   end
