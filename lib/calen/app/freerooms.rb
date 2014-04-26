@@ -3,13 +3,13 @@ module Calen::App
     def initialize
     end
 
-    def run(options, ex)
-      rooms = ex.rooms_in_site_code(options.sites.first)
+    def run(options, exchange_gateway)
+      rooms = exchange_gateway.rooms_in_site_code(options.sites.first)
       start_time = options.time
       end_time = options.time + options.length
 
       rooms.each do |room|
-        room[:booked] = ex.room_availability room[:address], start_time, end_time
+        room[:booked] = exchange_gateway.room_availability room[:address], start_time, end_time
       end
 
       puts 'Available rooms on %s at %s for %s (ending at %s)' % [

@@ -22,7 +22,7 @@ options = option_parser.parse(ARGV)
 endpoint = 'https://webmail.tomtomgroup.com/ews/Exchange.asmx'
 settings = YAML.load_file File.expand_path('~/.jira')
 
-ex = ExchangeGateway.new(endpoint, settings)
+exchange_gateway = ExchangeGateway.new(endpoint, settings)
 
 MODE_TO_APP_CLASS_MAP = {
   dayview: Calen::App::Dayview,
@@ -30,4 +30,4 @@ MODE_TO_APP_CLASS_MAP = {
 }
 
 app = MODE_TO_APP_CLASS_MAP[options.mode].new
-app.run(options, ex)
+app.run(options, exchange_gateway)
