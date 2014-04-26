@@ -1,3 +1,5 @@
+require 'date_ranges'
+
 module Calen::App
   class Dayview
     def initialize
