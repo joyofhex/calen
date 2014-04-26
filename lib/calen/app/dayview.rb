@@ -4,7 +4,8 @@ module Calen::App
 
     end
 
-    def run(options, ex, rooms)
+    def run(options, ex)
+      rooms = ex.rooms_in_site_code(options.sites.first)
       start_time = options.start_time
       end_time = options.end_time
 
