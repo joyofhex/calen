@@ -26,7 +26,6 @@ settings = YAML.load_file File.expand_path('~/.jira')
 ex = ExchangeGateway.new(endpoint, settings)
 
 rooms = ex.rooms_in_site_code(options.sites.first)
-today = options.date
 
 MODE_TO_APP_CLASS_MAP = {
   dayview: Calen::App::Dayview,
