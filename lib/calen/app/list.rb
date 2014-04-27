@@ -27,8 +27,8 @@ module Calen::App
         puts TABLE_FIELD_WIDTHS % [
           appointment.start_time.strftime("%H:%M"),
           appointment.end_time.strftime("%H:%M"),
-          appointment.subject[0..19],
-          appointment.location[0..29],
+          appointment.subject[0..27],
+          appointment.location[0..39],
         ]
       end
     end
