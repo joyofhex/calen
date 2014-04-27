@@ -9,6 +9,8 @@ require 'chronic_duration'
 
 require 'calen/app/dayview'
 require 'calen/app/freerooms'
+require 'calen/app/list'
+
 require 'exchange_gateway'
 
 require 'options'
@@ -27,6 +29,7 @@ exchange_gateway = ExchangeGateway.new(endpoint, settings)
 MODE_TO_APP_CLASS_MAP = {
   dayview: Calen::App::Dayview,
   freerooms: Calen::App::FreeRooms,
+  list: Calen::App::List,
 }
 
 app = MODE_TO_APP_CLASS_MAP[options.mode].new

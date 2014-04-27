@@ -1,9 +1,9 @@
 # encoding: utf-8
 require 'viewpoint'
 require 'time'
+require 'exchange_gateway/appointment'
 
 include Viewpoint::EWS
-
 
 class ExchangeGateway
   include Viewpoint::EWS
@@ -51,6 +51,12 @@ class ExchangeGateway
     availability = appointments_in_range(address, start_time, end_time)
     availability.calendar_event_array.map do |event|
       time_range_for_calendar_event(event[:calendar_event][:elems])
+    end
+  end
+
+  def appointment_list_for(address, start_time, end_time)
+    appointments_in_range(address, start_time, end_time).calendar_event_array.map do |event|
+      ExchangeGateway::Appointment.new(event)
     end
   end
 

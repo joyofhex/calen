@@ -40,6 +40,15 @@ class Options
         options.time = Chronic.parse(time, now: options.date)
         options.mode = :freerooms
       end
+
+      opts.on '-a', '--address ADDRESS', 'Address of user to lookup' do |address|
+        options.address = address
+        options.mode = :list
+      end
+
+      opts.on '-m', '--me', 'Lookup up calendar for today' do |me|
+        options.mode = :list
+      end
     end
 
     option_parser.parse!(args)
