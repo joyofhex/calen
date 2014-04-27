@@ -1,6 +1,9 @@
 module Calen::App
   class List
     attr_accessor :exchange_gateway, :address, :start_time, :end_time
+
+    TABLE_FIELD_WIDTHS = "%-7s %-7s %-30s %-40s"
+
     def initialize
     end
 
@@ -21,7 +24,7 @@ module Calen::App
     def display(appointment_list)
       header
       appointment_list.each do |appointment|
-        puts "%-10s %-10s %-30s %-40s" % [
+        puts TABLE_FIELD_WIDTHS % [
           appointment.start_time.strftime("%H:%M"),
           appointment.end_time.strftime("%H:%M"),
           appointment.subject[0..19],
@@ -32,7 +35,7 @@ module Calen::App
 
     def header
       puts "Appointments on #{start_time.to_date}"
-      puts "%-10s %-10s %-30s %-40s" % [
+      puts TABLE_FIELD_WIDTHS % [
         'Start',
         'End',
         'Subject',
