@@ -5,6 +5,10 @@ require 'chronic'
 require 'chronic_duration'
 
 class Options
+  def initialize(settings)
+    @settings = settings
+  end
+
   def parse(args)
     options = OpenStruct.new
     options.sites = []
@@ -48,6 +52,7 @@ class Options
 
       opts.on '-m', '--me', 'Lookup up calendar for today' do |me|
         options.mode = :list
+        options.address = settings['address']
       end
     end
 
@@ -62,4 +67,7 @@ class Options
   def time_at_midnight_on(date)
     Time.gm(date.year, date.month, date.day)
   end
+
+  private
+  def settings; @settings; end
 end
