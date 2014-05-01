@@ -18,11 +18,12 @@ require 'options'
 logger = Logging.logger(STDOUT)
 logger.level = :warn
 
-option_parser = Options.new
+endpoint = 'https://webmail.tomtomgroup.com/ews/Exchange.asmx'
+settings = YAML.load_file File.expand_path('~/.calen')
+
+option_parser = Options.new(settings)
 options = option_parser.parse(ARGV)
 
-endpoint = 'https://webmail.tomtomgroup.com/ews/Exchange.asmx'
-settings = YAML.load_file File.expand_path('~/.jira')
 
 exchange_gateway = ExchangeGateway.new(endpoint, settings)
 
