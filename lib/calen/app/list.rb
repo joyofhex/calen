@@ -2,7 +2,7 @@ module Calen::App
   class List
     attr_accessor :exchange_gateway, :address, :start_time, :end_time
 
-    TABLE_FIELD_WIDTHS = "%-7s %-7s %-30s %-40s"
+    TABLE_FIELD_WIDTHS = "%-7s %-7s %-30s %-40s %-9s %-6s %-8s"
 
     def initialize
     end
@@ -29,6 +29,9 @@ module Calen::App
           appointment.end_time.strftime("%H:%M"),
           appointment.subject[0..27],
           appointment.location[0..39],
+          appointment.status[0..8],
+          appointment.recurring? ? 'Yes' : 'No',
+          appointment.private? ? 'Yes' : 'No',
         ]
       end
     end
@@ -40,6 +43,9 @@ module Calen::App
         'End',
         'Subject',
         'Location',
+        'Status',
+        'Recur',
+        'Private',
       ]
     end
 
