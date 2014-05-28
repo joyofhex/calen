@@ -33,7 +33,8 @@ class ExchangeGateway
     private
     def find_field(data, field_name)
       return nil unless data
-      data.find { |field| field.key? field_name }[field_name][:text]
+      field = data.find { |field| field.key? field_name }
+      field ? field[field_name][:text] : nil
     end
   end
 end
