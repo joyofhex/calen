@@ -63,11 +63,14 @@ Start   End     Subject                        Location                         
 ## Options 
 
 ```
-  Usage: $0 [options]
-      -s, --site SITE                  SITE to search for rooms
-      -d, --date DATE                  DATE to search
-          --work-day-start-time TIME   TIME for the beginning of the day
-          --work-day-end-time TIME     TIME for the end of the day
-      -l, --length DURATION            Length of meeting
-      -t, --time TIME                  Start time of the meeting
+$ bundle exec bin/calen --help
+Usage: calen [options]
+    -s, --site SITE                  SITE to search for rooms
+    -d, --date DATE                  DATE to search
+        --work-day-start-time TIME   TIME for the beginning of the day
+        --work-day-end-time TIME     TIME for the end of the day
+    -l, --length DURATION            Length of meeting
+    -t, --time TIME                  Start time of the meeting
+    -a, --address ADDRESS            Address of user to lookup
+    -m, --me                         Lookup up calendar for today
 ```
