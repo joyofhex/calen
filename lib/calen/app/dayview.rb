@@ -3,6 +3,10 @@ require 'date_ranges'
 
 module Calen::App
   class Dayview
+    SECONDS_BETWEEN_HEADER_ENTRIES = 7200
+    DURATION_OF_EACH_OUTPUT_CHARACTER = 900
+    MINIMUM_WIDTH = 60
+
     def initialize
 
     end
@@ -16,10 +20,10 @@ module Calen::App
         room[:booked] = exchange_gateway.room_availability room[:address], start_time, end_time
       end
 
-      _, columns = IO.console.winsize
-      columns = 60 if columns < 60
+      columns = IO.console.winsize[1]
+      columns = MINIMUM_WIDTH if columns < MINIMUM_WIDTH
 
-      time_header = time_header(start_time, end_time, 7200)
+      time_header = time_header(start_time, end_time, SECONDS_BETWEEN_HEADER_ENTRIES)
       room_name_max_field_width = columns - time_header.length
       room_name_max_length = rooms.max { |a,b| a[:name].length <=> b[:name].length }[:name].length
       room_name_field_width = [ room_name_max_field_width, room_name_max_length + 2 ].min
@@ -29,7 +33,7 @@ module Calen::App
         start_time.strftime('%R'),
         end_time.strftime('%R'),
       ]
-      puts "%-#{room_name_field_width+2}s " % [ 'Room' ] + time_header(start_time, end_time, 7200)
+      puts "%-#{room_name_field_width+2}s " % [ 'Room' ] + time_header
       rooms.each do |room|
         room_name_field = "%-#{room_name_field_width+1}s" % [ room[:name][0..room_name_field_width] ]
         puts room_name_field + ': ' + free_busy_per_quarter_hour_display(room[:booked], start_time, end_time)
@@ -53,7 +57,7 @@ module Calen::App
 
     def free_busy_per_quarter_hour_display(booked_ranges, start_time, end_time)
       display_string = ''
-      time_iterate(start_time, end_time, 900) do |time|
+      time_iterate(start_time, end_time, DURATION_OF_EACH_OUTPUT_CHARACTER) do |time|
         display_string += is_time_covered_by_booked_times?(booked_ranges, time) ? '*' : free_symbol(time)
       end
       display_string
