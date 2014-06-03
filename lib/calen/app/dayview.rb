@@ -1,3 +1,4 @@
+require 'io/console'
 require 'date_ranges'
 
 module Calen::App
@@ -15,14 +16,22 @@ module Calen::App
         room[:booked] = exchange_gateway.room_availability room[:address], start_time, end_time
       end
 
+      _, columns = IO.console.winsize
+      columns = 60 if columns < 60
+
+      time_header = time_header(start_time, end_time, 7200)
+      room_name_max_field_width = columns - time_header.length
+      room_name_max_length = rooms.max { |a,b| a[:name].length <=> b[:name].length }[:name].length
+      room_name_field_width = [ room_name_max_field_width, room_name_max_length + 2 ].min
+
       puts 'Room Availability on %s from %s until %s' % [
         start_time.strftime('%F'),
         start_time.strftime('%R'),
         end_time.strftime('%R'),
       ]
-      puts '%-30s ' % [ 'Room' ] + time_header(start_time, end_time, 7200)
+      puts "%-#{room_name_field_width+2}s " % [ 'Room' ] + time_header(start_time, end_time, 7200)
       rooms.each do |room|
-        room_name_field = "%-29s" % [ room[:name][0..28] ]
+        room_name_field = "%-#{room_name_field_width+1}s" % [ room[:name][0..room_name_field_width] ]
         puts room_name_field + ': ' + free_busy_per_quarter_hour_display(room[:booked], start_time, end_time)
       end
     end
@@ -52,7 +61,7 @@ module Calen::App
 
     def time_header(start_time, end_time, step)
       display_string = ''
-      time_iterate(start_time, end_time, 7200) do |time|
+      time_iterate(start_time, end_time, step) do |time|
         display_string += '|%-7s' % [time.strftime('%H:%M')]
       end
       display_string
