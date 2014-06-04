@@ -63,7 +63,7 @@ Start   End     Subject                        Location                         
 ## Options 
 
 ```
-$ bundle exec bin/calen --help
+$ calen --help
 Usage: calen [options]
     -s, --site SITE                  SITE to search for rooms
     -d, --date DATE                  DATE to search
