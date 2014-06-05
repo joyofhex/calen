@@ -20,13 +20,8 @@ module Calen::App
         room[:booked] = exchange_gateway.room_availability room[:address], start_time, end_time
       end
 
-      columns = IO.console.winsize[1]
-      columns = MINIMUM_WIDTH if columns < MINIMUM_WIDTH
-
       time_header = time_header(start_time, end_time, SECONDS_BETWEEN_HEADER_ENTRIES)
-      room_name_max_field_width = columns - time_header.length
-      room_name_max_length = rooms.max { |a,b| a[:name].length <=> b[:name].length }[:name].length
-      room_name_field_width = [ room_name_max_field_width, room_name_max_length + 2 ].min
+      room_name_field_width = calculate_room_name_field_width(time_header.length, rooms)
 
       puts 'Room Availability on %s from %s until %s' % [
         start_time.strftime('%F'),
@@ -41,6 +36,19 @@ module Calen::App
     end
 
     private
+    def calculate_room_name_field_width(columns, time_header_length, rooms)
+      columns = console_window_width
+      columns = MINIMUM_WIDTH if columns < MINIMUM_WIDTH
+
+      room_name_max_field_width = columns - time_header_length
+      room_name_max_length = rooms.max { |a,b| a[:name].length <=> b[:name].length }[:name].length
+      [ room_name_max_field_width, room_name_max_length + 2 ].min
+    end
+
+    def console_window_width
+      IO.console.winsize[1]
+    end
+
     def time_iterate(start_time, end_time, step, &block)
       begin
         yield(start_time)
@@ -70,7 +78,6 @@ module Calen::App
       end
       display_string
     end
-
 
   end
 end
