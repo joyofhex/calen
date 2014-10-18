@@ -36,7 +36,7 @@ module Calen::App
     end
 
     private
-    def calculate_room_name_field_width(columns, time_header_length, rooms)
+    def calculate_room_name_field_width(time_header_length, rooms)
       columns = console_window_width
       columns = MINIMUM_WIDTH if columns < MINIMUM_WIDTH
 
