@@ -48,10 +48,11 @@ class ExchangeGateway
   end
 
   def bulk_room_availability(addresses, start_time, end_time)
-    addresses.each do |room|
-      room[:booked] = room_availability room[:address], start_time, end_time
-    end
-    addresses
+    # addresses.each do |room|
+    #   room[:booked] = room_availability room[:address], start_time, end_time
+    # end
+    # addresses
+    bulk_appointments_in_range addresses, start_time, end_time
   end
 
   def user_availability(address, start_time, end_time)
@@ -65,6 +66,37 @@ class ExchangeGateway
     appointments_in_range(address, start_time, end_time).calendar_event_array.map do |event|
       ExchangeGateway::Appointment.new(event)
     end
+  end
+
+  def bulk_appointments_in_range(addresses, start_time, end_time)
+    bias = 0
+    avail = cli.get_user_availability(
+      addresses.map { |a| a[:address] },
+      start_time: start_time.iso8601,
+      end_time: end_time.iso8601,
+      requested_view: :detailed,
+      time_zone: { bias: bias }
+    )
+    availability_by_room = avail.body[0][:get_user_availability_response][:elems][0][:free_busy_response_array][:elems]
+    appointments_by_room = []
+    addresses.each_with_index do |address,index|
+      calendar_events = availability_by_room[index][:free_busy_response][:elems][1][:free_busy_view][:elems][1]
+
+      if calendar_events and calendar_events.has_key? :calendar_event_array
+        range = calendar_events[:calendar_event_array][:elems].map do |event|
+          time_range_for_calendar_event(event[:calendar_event][:elems])
+        end
+      else
+        range = []
+      end
+
+      appointments_by_room << {
+        name: address[:name],
+        address: address[:address],
+        booked: range,
+      }
+    end
+    appointments_by_room
   end
 
   def appointments_in_range(address, start_time, end_time)
