@@ -8,9 +8,7 @@ module Calen::App
       start_time = options.time
       end_time = options.time + options.length
 
-      rooms.each do |room|
-        room[:booked] = exchange_gateway.room_availability room[:address], start_time, end_time
-      end
+      rooms = exchange_gateway.bulk_room_availability rooms, start_time, end_time
 
       puts 'Available rooms on %s at %s for %s (ending at %s)' % [
         start_time.strftime('%F'),

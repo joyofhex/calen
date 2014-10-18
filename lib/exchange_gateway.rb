@@ -47,6 +47,13 @@ class ExchangeGateway
     user_availability(address, start_time, end_time)
   end
 
+  def bulk_room_availability(addresses, start_time, end_time)
+    addresses.each do |room|
+      room[:booked] = room_availability room[:address], start_time, end_time
+    end
+    addresses
+  end
+
   def user_availability(address, start_time, end_time)
     availability = appointments_in_range(address, start_time, end_time)
     availability.calendar_event_array.map do |event|
@@ -62,7 +69,13 @@ class ExchangeGateway
 
   def appointments_in_range(address, start_time, end_time)
     bias = 0
-    cli.get_user_availability([address], start_time: start_time, end_time: end_time, requested_view: :detailed, time_zone: { bias: bias })
+    cli.get_user_availability(
+      [address],
+      start_time: start_time.iso8601,
+      end_time: end_time.iso8601,
+      requested_view: :detailed,
+      time_zone: { bias: bias }
+    )
   end
 
   def time_range_for_calendar_event(event)

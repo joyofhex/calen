@@ -16,9 +16,7 @@ module Calen::App
       start_time = options.start_time
       end_time = options.end_time
 
-      rooms.each do |room|
-        room[:booked] = exchange_gateway.room_availability room[:address], start_time, end_time
-      end
+      rooms = exchange_gateway.bulk_room_availability rooms, start_time, end_time
 
       time_header = time_header(start_time, end_time, SECONDS_BETWEEN_HEADER_ENTRIES)
       room_name_field_width = calculate_room_name_field_width(time_header.length, rooms)
