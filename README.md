@@ -11,6 +11,8 @@ First, calen looks at a file named ~/.calen for your corporate credentials. It i
   username: corp_username
   password: your_password_here
   address: your_email_address_here
+  endpoint: url_to_EWS_endpoint
+  ca: file_containing_private_ca_cert
 ```
 
 There are three ways you can use calen.

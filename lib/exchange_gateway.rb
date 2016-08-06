@@ -3,14 +3,12 @@ require 'viewpoint'
 require 'time'
 require 'exchange_gateway/appointment'
 
-include Viewpoint::EWS
-
 class ExchangeGateway
   include Viewpoint::EWS
 
   def initialize(endpoint, settings)
     Viewpoint::EWS.root_logger.level = :warn
-    @cli = Viewpoint::EWSClient.new endpoint, settings['username'], settings['password'] 
+    @cli = Viewpoint::EWSClient.new endpoint, settings['username'], settings['password'], http_opts: { trust_ca: [ settings['ca'] ] }
     @timezone = 'W. Europe Standard Time'
     @cli.set_time_zone timezone
   end
