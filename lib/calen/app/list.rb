@@ -2,7 +2,7 @@ module Calen::App
   class List
     attr_accessor :exchange_gateway, :address, :start_time, :end_time
 
-    TABLE_FIELD_WIDTHS = "%-7s %-7s %-30s %-40s %-9s %-6s %-8s"
+    TABLE_FIELD_WIDTHS = '%-7s %-7s %-30s %-40s %-9s %-6s %-8s'.freeze
 
     def initialize
     end
@@ -16,38 +16,38 @@ module Calen::App
     end
 
     private
+
     def appointment_list
       exchange_gateway.appointment_list_for(address, start_time, end_time)
-        .sort { |a,b| a.start_time <=> b.start_time }
+                      .sort { |a, b| a.start_time <=> b.start_time }
     end
 
     def display(appointment_list)
       header
       appointment_list.each do |appointment|
         puts TABLE_FIELD_WIDTHS % [
-          appointment.start_time.strftime("%H:%M"),
-          appointment.end_time.strftime("%H:%M"),
+          appointment.start_time.strftime('%H:%M'),
+          appointment.end_time.strftime('%H:%M'),
           appointment.subject[0..27],
           appointment.location[0..39],
           appointment.status[0..8],
           appointment.recurring? ? 'Yes' : 'No',
-          appointment.private? ? 'Yes' : 'No',
+          appointment.private? ? 'Yes' : 'No'
         ]
       end
     end
 
     def header
       puts "Appointments on #{start_time.to_date}"
-      puts TABLE_FIELD_WIDTHS % [
-        'Start',
-        'End',
-        'Subject',
-        'Location',
-        'Status',
-        'Recur',
-        'Private',
-      ]
+      puts TABLE_FIELD_WIDTHS % %w(
+        Start
+        End
+        Subject
+        Location
+        Status
+        Recur
+        Private
+      )
     end
-
   end
 end

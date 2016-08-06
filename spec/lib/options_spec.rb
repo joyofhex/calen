@@ -7,7 +7,7 @@ require 'options'
 describe Options do
   context 'when multiple sites are provided' do
     it 'returns the sites in the options struct' do
-      args = [ '-s', 'ODE', '-s', 'DRK' ]
+      args = ['-s', 'ODE', '-s', 'DRK']
       option_parser = Options.new
       options = option_parser.parse(args)
 
@@ -32,7 +32,7 @@ describe Options do
 
   context 'when a date is specified' do
     it 'should be in the options date structure' do
-      args = [ '-d', '2013-12-01']
+      args = ['-d', '2013-12-01']
       today = Time.parse('2013-12-01')
       option_parser = Options.new
       options = option_parser.parse(args)
@@ -45,7 +45,7 @@ describe Options do
 
   context 'when an invalid date is used' do
     it 'should use today as a default' do
-      args = [ '-d', 'dingleberry' ]
+      args = ['-d', 'dingleberry']
       today = Time.now
       option_parser = Options.new
       options = option_parser.parse(args)
@@ -55,5 +55,4 @@ describe Options do
       expect(options.date.day).to eq(today.day)
     end
   end
-
 end

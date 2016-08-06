@@ -14,11 +14,11 @@ module Calen::App
         start_time.strftime('%F'),
         start_time.strftime('%R'),
         ChronicDuration.output(options.length),
-        end_time.strftime('%R'),
+        end_time.strftime('%R')
       ]
 
       rooms.each do |room|
-        puts "\t" + room[:name] if room[:booked].length == 0
+        puts "\t" + room[:name] if room[:booked].length.zero?
       end
     end
   end

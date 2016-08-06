@@ -28,8 +28,8 @@ exchange_gateway = ExchangeGateway.new(endpoint, settings)
 MODE_TO_APP_CLASS_MAP = {
   dayview: Calen::App::Dayview,
   freerooms: Calen::App::FreeRooms,
-  list: Calen::App::List,
-}
+  list: Calen::App::List
+}.freeze
 
 app = MODE_TO_APP_CLASS_MAP[options.mode].new
 app.run(options, exchange_gateway)

@@ -8,7 +8,6 @@ module Calen::App
     MINIMUM_WIDTH = 60
 
     def initialize
-
     end
 
     def run(options, exchange_gateway)
@@ -24,30 +23,31 @@ module Calen::App
       puts 'Room Availability on %s from %s until %s' % [
         start_time.strftime('%F'),
         start_time.strftime('%R'),
-        end_time.strftime('%R'),
+        end_time.strftime('%R')
       ]
-      puts "%-#{room_name_field_width+2}s " % [ 'Room' ] + time_header
+      puts "%-#{room_name_field_width + 2}s " % ['Room'] + time_header
       rooms.each do |room|
-        room_name_field = "%-#{room_name_field_width+1}s" % [ room[:name][0..room_name_field_width] ]
+        room_name_field = "%-#{room_name_field_width + 1}s" % [room[:name][0..room_name_field_width]]
         puts room_name_field + ': ' + free_busy_per_quarter_hour_display(room[:booked], start_time, end_time)
       end
     end
 
     private
+
     def calculate_room_name_field_width(time_header_length, rooms)
       columns = console_window_width
       columns = MINIMUM_WIDTH if columns < MINIMUM_WIDTH
 
       room_name_max_field_width = columns - time_header_length
-      room_name_max_length = rooms.max { |a,b| a[:name].length <=> b[:name].length }[:name].length
-      [ room_name_max_field_width, room_name_max_length + 2 ].min
+      room_name_max_length = rooms.max { |a, b| a[:name].length <=> b[:name].length }[:name].length
+      [room_name_max_field_width, room_name_max_length + 2].min
     end
 
     def console_window_width
       IO.console.winsize[1]
     end
 
-    def time_iterate(start_time, end_time, step, &block)
+    def time_iterate(start_time, end_time, step)
       begin
         yield(start_time)
       end while (start_time += step) <= end_time
@@ -58,7 +58,7 @@ module Calen::App
     end
 
     def free_symbol(time)
-      time.to_i % 3600 == 0 ? '|' : '.'
+      (time.to_i % 3600).zero? ? '|' : '.'
     end
 
     def free_busy_per_quarter_hour_display(booked_ranges, start_time, end_time)
@@ -76,6 +76,5 @@ module Calen::App
       end
       display_string
     end
-
   end
 end

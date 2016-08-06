@@ -3,7 +3,6 @@
 require 'time'
 
 class DateRanges
-
   attr_accessor :dates
 
   def initialize
@@ -13,7 +12,6 @@ class DateRanges
   def add_date_range(range)
     @date_ranges << range
   end
-
 
   def ranges
     @date_ranges.sort_by(&:begin).inject([]) do |ranges, range|
@@ -32,5 +30,4 @@ class DateRanges
   def merge_ranges(a, b)
     [a.begin, b.begin].min..[a.end, b.end].max
   end
-
 end

@@ -1,4 +1,4 @@
-require "calen/version"
+require 'calen/version'
 
 module Calen
   # Your code goes here...

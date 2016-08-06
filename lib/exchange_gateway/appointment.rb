@@ -13,8 +13,8 @@ class ExchangeGateway
         calendar_event_details = calendar_event_details[:calendar_event_details][:elems]
         @subject = find_field(calendar_event_details, :subject) || ''
         @location = find_field(calendar_event_details, :location) || ''
-        @recurring = find_field(calendar_event_details, :is_recurring) == "true"
-        @private = find_field(calendar_event_details, :is_private) == "true"
+        @recurring = find_field(calendar_event_details, :is_recurring) == 'true'
+        @private = find_field(calendar_event_details, :is_private) == 'true'
       else
         @subject = @location = ''
         @recurring = false
@@ -31,6 +31,7 @@ class ExchangeGateway
     end
 
     private
+
     def find_field(data, field_name)
       return nil unless data
       field = data.find { |field| field.key? field_name }

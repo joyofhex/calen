@@ -1,6 +1,6 @@
 RSpec.configure do |config|
   config.order = 'random'
-  config.color_enabled = true
+  config.color = true
   config.tty = true
-  config.formatter = :documentation 
+  config.formatter = :documentation
 end

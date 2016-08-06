@@ -17,7 +17,7 @@ class Options
     options.mode = :dayview
 
     option_parser = OptionParser.new do |opts|
-      opts.banner = "Usage: calen [options]"
+      opts.banner = 'Usage: calen [options]'
 
       opts.on '-s', '--site SITE', 'SITE to search for rooms' do |site|
         options.sites << site
@@ -50,7 +50,7 @@ class Options
         options.mode = :list
       end
 
-      opts.on '-m', '--me', 'Lookup up calendar for today' do |me|
+      opts.on '-m', '--me', 'Lookup up calendar for today' do |_me|
         options.mode = :list
         options.address = settings['address']
       end
@@ -59,9 +59,8 @@ class Options
     option_parser.parse!(args)
     options.start_time ||= Time.parse('08:00', options.date)
     options.end_time ||= Time.parse('18:00', options.date)
-    options.sites << '' if options.sites.count == 0
+    options.sites << '' if options.sites.count.zero?
     options
-
   end
 
   def time_at_midnight_on(date)
@@ -69,5 +68,6 @@ class Options
   end
 
   private
-  def settings; @settings; end
+
+  attr_reader :settings
 end

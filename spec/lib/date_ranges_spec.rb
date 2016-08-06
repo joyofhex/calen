@@ -4,14 +4,12 @@ require 'time'
 require 'date_ranges'
 
 describe DateRanges do
-
   describe '#ranges_overlap?' do
     it 'a single range overlaps' do
       date_range = Time.parse('2013-12-05T01:00:00+00:00')..Time.parse('2013-12-05T02:00:00+00:00')
       dr = DateRanges.new
 
-
-      expect(dr.ranges_overlap? date_range, date_range).to be_true
+      expect(dr.ranges_overlap?(date_range, date_range)).to be_true
     end
 
     it 'two identical ranges overlap' do
@@ -20,7 +18,7 @@ describe DateRanges do
 
       dr = DateRanges.new
 
-      expect(dr.ranges_overlap? date_range1, date_range2).to be_true
+      expect(dr.ranges_overlap?(date_range1, date_range2)).to be_true
     end
 
     it 'two widely differing ranges do not overlap' do
@@ -29,7 +27,7 @@ describe DateRanges do
 
       dr = DateRanges.new
 
-      expect(dr.ranges_overlap? date_range1, date_range2).to be_false
+      expect(dr.ranges_overlap?(date_range1, date_range2)).to be_false
     end
 
     it 'two adjacent ranges overlap' do
@@ -38,7 +36,7 @@ describe DateRanges do
 
       dr = DateRanges.new
 
-      expect(dr.ranges_overlap? date_range1, date_range2).to be_true
+      expect(dr.ranges_overlap?(date_range1, date_range2)).to be_true
     end
 
     it 'two almost adjacent ranges do not overlap' do
@@ -47,7 +45,7 @@ describe DateRanges do
 
       dr = DateRanges.new
 
-      expect(dr.ranges_overlap? date_range1, date_range2).to be_false
+      expect(dr.ranges_overlap?(date_range1, date_range2)).to be_false
     end
 
     it 'two overlapping ranges overlap' do
@@ -56,7 +54,7 @@ describe DateRanges do
 
       dr = DateRanges.new
 
-      expect(dr.ranges_overlap? date_range1, date_range2).to be_true
+      expect(dr.ranges_overlap?(date_range1, date_range2)).to be_true
     end
   end
 
@@ -97,7 +95,6 @@ describe DateRanges do
       expect(ranges.count).to eq 1
       expect(ranges.first.begin).to eq Time.parse('2013-12-05T01:00:00+00:00')
       expect(ranges.first.end).to eq Time.parse('2013-12-05T02:00:00+00:00')
-
     end
 
     it 'two identical ranges overlap' do
@@ -167,11 +164,5 @@ describe DateRanges do
       expect(ranges[0].begin).to eq Time.parse('2013-12-05T01:00:00+00:00')
       expect(ranges[0].end).to eq Time.parse('2013-12-05T04:00:00+00:00')
     end
-
   end
 end
-
-
-
-
-
