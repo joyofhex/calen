@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "calen"
   spec.version       = Calen::VERSION
   spec.authors       = ["David Bruce"]
-  spec.email         = ["david.bruce@tomtom.com"]
+  spec.email         = ["djb@ragnarok.net"]
   spec.description   = %q{Find a free meeting room}
   spec.summary       = %q{Find a free meeting room}
   spec.homepage      = ""
@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'pry-rescue'
   spec.add_dependency 'pry-stack_explorer'
   spec.add_development_dependency 'rspec'
-  spec.add_dependency 'viewpoint'
+#  spec.add_dependency 'viewpoint'
   spec.add_dependency 'chronic'
   spec.add_dependency 'chronic_duration'
 
