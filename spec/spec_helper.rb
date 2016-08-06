@@ -1,3 +1,5 @@
+require 'bundler/setup'
+Bundler.setup
 RSpec.configure do |config|
   config.order = 'random'
   config.color = true

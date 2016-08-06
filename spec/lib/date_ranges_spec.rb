@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 require 'time'
 require 'date_ranges'
 
@@ -9,7 +8,7 @@ describe DateRanges do
       date_range = Time.parse('2013-12-05T01:00:00+00:00')..Time.parse('2013-12-05T02:00:00+00:00')
       dr = DateRanges.new
 
-      expect(dr.ranges_overlap?(date_range, date_range)).to be_true
+      expect(dr.ranges_overlap?(date_range, date_range)).to be true
     end
 
     it 'two identical ranges overlap' do
@@ -18,7 +17,7 @@ describe DateRanges do
 
       dr = DateRanges.new
 
-      expect(dr.ranges_overlap?(date_range1, date_range2)).to be_true
+      expect(dr.ranges_overlap?(date_range1, date_range2)).to be true
     end
 
     it 'two widely differing ranges do not overlap' do
@@ -27,7 +26,7 @@ describe DateRanges do
 
       dr = DateRanges.new
 
-      expect(dr.ranges_overlap?(date_range1, date_range2)).to be_false
+      expect(dr.ranges_overlap?(date_range1, date_range2)).to be false
     end
 
     it 'two adjacent ranges overlap' do
@@ -36,7 +35,7 @@ describe DateRanges do
 
       dr = DateRanges.new
 
-      expect(dr.ranges_overlap?(date_range1, date_range2)).to be_true
+      expect(dr.ranges_overlap?(date_range1, date_range2)).to be true
     end
 
     it 'two almost adjacent ranges do not overlap' do
@@ -45,7 +44,7 @@ describe DateRanges do
 
       dr = DateRanges.new
 
-      expect(dr.ranges_overlap?(date_range1, date_range2)).to be_false
+      expect(dr.ranges_overlap?(date_range1, date_range2)).to be false
     end
 
     it 'two overlapping ranges overlap' do
@@ -54,7 +53,7 @@ describe DateRanges do
 
       dr = DateRanges.new
 
-      expect(dr.ranges_overlap?(date_range1, date_range2)).to be_true
+      expect(dr.ranges_overlap?(date_range1, date_range2)).to be true
     end
   end
 

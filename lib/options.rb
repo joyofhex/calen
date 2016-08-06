@@ -5,7 +5,7 @@ require 'chronic'
 require 'chronic_duration'
 
 class Options
-  def initialize(settings)
+  def initialize(settings = {})
     @settings = settings
   end
 
