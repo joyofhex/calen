@@ -16,14 +16,13 @@ require 'exchange_gateway'
 require 'options'
 
 logger = Logging.logger(STDOUT)
-logger.level = :warn
+logger.level = :debug
 
-endpoint = 'https://webmail.tomtomgroup.com/ews/Exchange.asmx'
 settings = YAML.load_file File.expand_path('~/.calen')
+endpoint = settings['endpoint']
 
 option_parser = Options.new(settings)
 options = option_parser.parse(ARGV)
-
 
 exchange_gateway = ExchangeGateway.new(endpoint, settings)
 
