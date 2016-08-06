@@ -4,7 +4,6 @@ require 'logging'
 require 'yaml'
 require 'time'
 require 'optparse'
-require 'pry'
 require 'chronic_duration'
 
 require 'calen/app/dayview'
